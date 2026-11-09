@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu & Settings | BoostHub</title>
+  <meta name="description" content="Account, support, appearance, and policy links for BoostHub.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand-link" href="/">
+        <span class="brand-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+        <span class="brand-text">Boost<span>Hub</span></span>
+      </a>
+      <a class="wallet-pill" href="/addfunds/" title="Wallet Balance">
+        <span data-wallet-balance>₹0.00</span>
+        <span class="wallet-plus">+</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    
+<div class="page-header-row">
+  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+  <h1 class="section-title" style="margin:0;">Menu &amp; Account</h1>
+</div>
+
+<div class="panel" style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+  <div>
+    <div style="font-size:0.8rem;color:var(--muted);font-weight:700;">LOCAL DEMO ID</div>
+    <div id="menu-uid" style="font-size:1.15rem;font-weight:800;">BH-000000</div>
+  </div>
+  <div style="text-align:right;">
+    <div style="font-size:0.8rem;color:var(--muted);font-weight:700;">WALLET</div>
+    <div data-wallet-balance style="font-size:1.15rem;font-weight:800;color:var(--accent);">₹0.00</div>
+  </div>
+</div>
+
+<div class="service-stack">
+  <a class="service-card" href="/addfunds/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2"/><circle cx="17" cy="14" r="1.5" fill="currentColor"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">Add Funds &amp; Wallet History</div>
+        <div class="service-desc">Top up demo INR balance &amp; inspect transactions</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+
+  <a class="service-card" href="/orders/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">My Orders</div>
+        <div class="service-desc">Track order status &amp; history</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+
+  <a class="service-card" href="/chat/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">Support Chat</div>
+        <div class="service-desc">Ask questions or check order help</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+
+  <a class="service-card" href="/share/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">Share &amp; Referrals</div>
+        <div class="service-desc">Invite friends with your referral link</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+
+  <a class="service-card" href="/install/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">Install App</div>
+        <div class="service-desc">Add BoostHub to your home screen</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+
+  <a class="service-card" href="/terms/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">Terms of Service</div>
+        <div class="service-desc">Usage rules &amp; service policies</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+
+  <a class="service-card" href="/privacy-policy/">
+    <div class="service-card-left">
+      <span class="platform-icon icon-accent"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+      <div class="service-meta">
+        <div class="service-title">Privacy Policy</div>
+        <div class="service-desc">How local browser data is handled</div>
+      </div>
+    </div>
+    <span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
+  </a>
+</div>
+
+
+<div class="theme-box">
+  <div class="theme-label">Appearance Theme</div>
+  <div class="theme-swatches">
+    <button type="button" class="swatch-btn active" data-set-theme="blue"><span class="swatch-dot" style="background:#2563eb;"></span>Blue</button>
+    <button type="button" class="swatch-btn" data-set-theme="green"><span class="swatch-dot" style="background:#059669;"></span>Green</button>
+    <button type="button" class="swatch-btn" data-set-theme="red"><span class="swatch-dot" style="background:#dc2626;"></span>Red</button>
+    <button type="button" class="swatch-btn" data-set-theme="yellow"><span class="swatch-dot" style="background:#d97706;"></span>Yellow</button>
+    <button type="button" class="swatch-btn" data-set-theme="purple"><span class="swatch-dot" style="background:#7c3aed;"></span>Purple</button>
+    <button type="button" class="swatch-btn" data-toggle-dark><span class="swatch-dot" style="background:#0f172a;"></span>Dark Mode</button>
+  </div>
+</div>
+
+
+<div class="panel" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:10px;">
+  <button type="button" id="reset-spin-btn" class="btn-secondary">Reset Daily Spin Cooldown</button>
+  <button type="button" id="reset-demo-btn" class="btn-secondary" style="color:var(--danger);">Reset All Demo Data</button>
+</div>
+
+  </main>
+
+  
+<div class="fab-stack">
+  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+</div>
+
+
+  <nav class="bottom-nav" aria-label="Main Navigation">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="/orders/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><span>My Orders</span></a>
+      <a class="nav-item" href="/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Create Order</span></a>
+      <a class="nav-item" href="/menu/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></a>
+    </div>
+  </nav>
+
+  <script src="/assets/services.js"></script>
+  <script src="/assets/app.js"></script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var uidEl = document.getElementById("menu-uid");
+  if (uidEl) uidEl.textContent = window.BoostHub.ensureUserId();
+
+  document.getElementById("reset-spin-btn").addEventListener("click", function () {
+    localStorage.removeItem(window.BoostHub.KEYS.LAST_SPIN);
+    window.BoostHub.toast("Daily spin cooldown cleared!");
+  });
+
+  document.getElementById("reset-demo-btn").addEventListener("click", function () {
+    if (!confirm("Clear demo wallet, orders, transactions, and spin timer?")) return;
+    localStorage.removeItem(window.BoostHub.KEYS.WALLET);
+    localStorage.removeItem(window.BoostHub.KEYS.ORDERS);
+    localStorage.removeItem(window.BoostHub.KEYS.TXNS);
+    localStorage.removeItem(window.BoostHub.KEYS.LAST_SPIN);
+    localStorage.removeItem(window.BoostHub.KEYS.CHAT);
+    window.BoostHub.setBalance(0);
+    window.BoostHub.toast("All demo data reset.");
+  });
+});
+</script>
+
+</body>
+</html>
