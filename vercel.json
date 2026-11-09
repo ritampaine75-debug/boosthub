@@ -3,10 +3,7 @@
   "trailingSlash": true,
   "redirects": [
     { "source": "/chat.php", "destination": "/chat/", "permanent": true },
-    { "source": "/order.php", "destination": "/order/", "permanent": true }
-  ],
-  "rewrites": [
-    { "source": "/admin", "destination": "/admin/" },
-    { "source": "/admin/", "destination": "/admin/index.html" }
+    { "source": "/order.php", "destination": "/order/", "permanent": true },
+    { "source": "/admin", "destination": "/admin/", "permanent": true }
   ]
 }
