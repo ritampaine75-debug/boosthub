@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Place Order | BoostHub</title>
-  <meta name="description" content="Configure quantity and submit a demo service order on BoostHub.">
+  <title>Place Order — Buy SMM Services | BoostHub</title>
+  <meta name="description" content="Configure quantity and submit a demo service order for Instagram, Facebook, or YouTube on BoostHub. ₹ INR pricing, wallet balance, demo checkout.">
   <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://boosthub-seven.vercel.app/order/">
+  <meta property="og:title" content="Place Order — BoostHub">
+  <meta property="og:description" content="Buy Instagram, Facebook, YouTube services with demo wallet on BoostHub.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boosthub-seven.vercel.app/order/">
   <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -24,63 +30,60 @@
   </header>
 
   <main class="app-main">
-    
-<div class="page-header-row">
-  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
-  <div>
-    <h1 class="section-title" style="margin:0;">Place Order</h1>
-    <div style="font-size:0.86rem;color:var(--muted);">Static HTML/JS demo order checkout</div>
-  </div>
-</div>
-
-<div class="panel">
-  <div class="form-group">
-    <label class="form-label" for="order-service-select">Select Service</label>
-    <select id="order-service-select" class="form-control"></select>
-  </div>
-
-  <div id="service-details-box" class="alert-box" style="margin-bottom:16px;"></div>
-
-  <form id="order-form">
-    <div class="form-group">
-      <label class="form-label" for="order-link">Target Link / Username</label>
-      <input id="order-link" class="form-control" type="text" placeholder="https://example.com/your-post" required>
-      <div class="form-hint">Ensure the profile or post is set to Public before submitting.</div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label" for="order-qty">Quantity</label>
-      <input id="order-qty" class="form-control" type="number" min="50" step="10" required>
-      <div id="qty-hint" class="form-hint"></div>
-    </div>
-
-    <div class="panel" style="background:var(--card-alt);box-shadow:none;padding:12px 14px;">
-      <div class="summary-row">
-        <span>Rate per 1,000</span>
-        <strong id="order-rate">₹0.00</strong>
-      </div>
-      <div class="summary-row">
-        <span>Wallet Balance</span>
-        <strong data-wallet-balance>₹0.00</strong>
-      </div>
-      <div class="summary-row">
-        <span>Estimated Charge</span>
-        <strong id="order-total" style="color:var(--accent);font-size:1.05rem;">₹0.00</strong>
+    <div class="page-header-row">
+      <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+      <div>
+        <h1 class="section-title" style="margin:0;">Place Order</h1>
+        <div style="font-size:0.86rem;color:var(--muted);">Static HTML/JS demo order checkout</div>
       </div>
     </div>
 
-    <button type="submit" class="btn-primary">Submit Demo Order</button>
-  </form>
-</div>
+    <div class="panel">
+      <div class="form-group">
+        <label class="form-label" for="order-service-select">Select Service</label>
+        <select id="order-service-select" class="form-control"></select>
+      </div>
+
+      <div id="service-details-box" class="alert-box" style="margin-bottom:16px;"></div>
+
+      <form id="order-form">
+        <div class="form-group">
+          <label class="form-label" for="order-link">Target Link / Username</label>
+          <input id="order-link" class="form-control" type="text" placeholder="https://example.com/your-post" required>
+          <div class="form-hint">Ensure the profile or post is set to Public before submitting.</div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="order-qty">Quantity</label>
+          <input id="order-qty" class="form-control" type="number" min="50" step="10" required>
+          <div id="qty-hint" class="form-hint"></div>
+        </div>
+
+        <div class="panel" style="background:var(--card-alt);box-shadow:none;padding:12px 14px;">
+          <div class="summary-row">
+            <span>Rate per 1,000</span>
+            <strong id="order-rate">₹0.00</strong>
+          </div>
+          <div class="summary-row">
+            <span>Wallet Balance</span>
+            <strong data-wallet-balance>₹0.00</strong>
+          </div>
+          <div class="summary-row">
+            <span>Estimated Charge</span>
+            <strong id="order-total" style="color:var(--accent);font-size:1.05rem;">₹0.00</strong>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary">Submit Demo Order</button>
+      </form>
+    </div>
 
   </main>
 
-  
-<div class="fab-stack">
-  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
-  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
-</div>
-
+  <div class="fab-stack">
+    <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+    <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+  </div>
 
   <nav class="bottom-nav" aria-label="Main Navigation">
     <div class="bottom-nav-inner">
@@ -92,8 +95,9 @@
 
   <script src="/assets/services.js"></script>
   <script src="/assets/app.js"></script>
-  
-<script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script>
 document.addEventListener("DOMContentLoaded", function () {
   var all = window.BOOSTHUB_CATALOG.getAllServices();
   var select = document.getElementById("order-service-select");
@@ -194,6 +198,5 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
-
 </body>
 </html>
