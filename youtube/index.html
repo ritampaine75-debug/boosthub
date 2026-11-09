@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Services | BoostHub</title>
-  <meta name="description" content="Explore YouTube growth packages and pricing on BoostHub.">
+  <title>YouTube Services — Views, Subscribers, Likes | BoostHub</title>
+  <meta name="description" content="Buy YouTube views, subscribers, likes, and watch hours on BoostHub. ₹ INR pricing, reliable delivery, demo wallet.">
   <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://boosthub-seven.vercel.app/youtube/">
+  <meta property="og:title" content="YouTube Services — BoostHub">
+  <meta property="og:description" content="YouTube views, subscribers, likes, and watch hours with ₹ pricing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boosthub-seven.vercel.app/youtube/">
   <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -24,25 +30,22 @@
   </header>
 
   <main class="app-main">
-    
-<div class="page-header-row">
-  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
-  <div>
-    <h1 class="section-title" style="margin:0;">YouTube Services</h1>
-    <div style="font-size:0.86rem;color:var(--muted);">Video views, subscribers, likes & watch time hours</div>
-  </div>
-</div>
+    <div class="page-header-row">
+      <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+      <div>
+        <h1 class="section-title" style="margin:0;">YouTube Services</h1>
+        <div style="font-size:0.86rem;color:var(--muted);">Subscribers, video views, likes &amp; watch time</div>
+      </div>
+    </div>
 
-<div id="platform-service-list" class="service-stack"></div>
+    <div id="platform-service-list" class="service-stack"></div>
 
   </main>
 
-  
-<div class="fab-stack">
-  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
-  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
-</div>
-
+  <div class="fab-stack">
+    <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+    <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+  </div>
 
   <nav class="bottom-nav" aria-label="Main Navigation">
     <div class="bottom-nav-inner">
@@ -54,8 +57,9 @@
 
   <script src="/assets/services.js"></script>
   <script src="/assets/app.js"></script>
-  
-<script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script>
 document.addEventListener("DOMContentLoaded", function () {
   var container = document.getElementById("platform-service-list");
   var platform = window.BOOSTHUB_CATALOG.platforms["youtube"];
@@ -79,6 +83,5 @@ document.addEventListener("DOMContentLoaded", function () {
   }).join("");
 });
 </script>
-
 </body>
 </html>
