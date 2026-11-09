@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Place Order | BoostHub</title>
+  <meta name="description" content="Configure quantity and submit a demo service order on BoostHub.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand-link" href="/">
+        <span class="brand-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+        <span class="brand-text">Boost<span>Hub</span></span>
+      </a>
+      <a class="wallet-pill" href="/addfunds/" title="Wallet Balance">
+        <span data-wallet-balance>₹0.00</span>
+        <span class="wallet-plus">+</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    
+<div class="page-header-row">
+  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+  <div>
+    <h1 class="section-title" style="margin:0;">Place Order</h1>
+    <div style="font-size:0.86rem;color:var(--muted);">Static HTML/JS demo order checkout</div>
+  </div>
+</div>
+
+<div class="panel">
+  <div class="form-group">
+    <label class="form-label" for="order-service-select">Select Service</label>
+    <select id="order-service-select" class="form-control"></select>
+  </div>
+
+  <div id="service-details-box" class="alert-box" style="margin-bottom:16px;"></div>
+
+  <form id="order-form">
+    <div class="form-group">
+      <label class="form-label" for="order-link">Target Link / Username</label>
+      <input id="order-link" class="form-control" type="text" placeholder="https://example.com/your-post" required>
+      <div class="form-hint">Ensure the profile or post is set to Public before submitting.</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="order-qty">Quantity</label>
+      <input id="order-qty" class="form-control" type="number" min="50" step="10" required>
+      <div id="qty-hint" class="form-hint"></div>
+    </div>
+
+    <div class="panel" style="background:var(--card-alt);box-shadow:none;padding:12px 14px;">
+      <div class="summary-row">
+        <span>Rate per 1,000</span>
+        <strong id="order-rate">₹0.00</strong>
+      </div>
+      <div class="summary-row">
+        <span>Wallet Balance</span>
+        <strong data-wallet-balance>₹0.00</strong>
+      </div>
+      <div class="summary-row">
+        <span>Estimated Charge</span>
+        <strong id="order-total" style="color:var(--accent);font-size:1.05rem;">₹0.00</strong>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-primary">Submit Demo Order</button>
+  </form>
+</div>
+
+  </main>
+
+  
+<div class="fab-stack">
+  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+</div>
+
+
+  <nav class="bottom-nav" aria-label="Main Navigation">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="/orders/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><span>My Orders</span></a>
+      <a class="nav-item" href="/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Create Order</span></a>
+      <a class="nav-item" href="/menu/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></a>
+    </div>
+  </nav>
+
+  <script src="/assets/services.js"></script>
+  <script src="/assets/app.js"></script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var all = window.BOOSTHUB_CATALOG.getAllServices();
+  var select = document.getElementById("order-service-select");
+  var detailsBox = document.getElementById("service-details-box");
+  var qtyInput = document.getElementById("order-qty");
+  var qtyHint = document.getElementById("qty-hint");
+  var rateEl = document.getElementById("order-rate");
+  var totalEl = document.getElementById("order-total");
+  var linkInput = document.getElementById("order-link");
+
+  select.innerHTML = all.map(function (s) {
+    return '<option value="' + s.id + '">[' + s.platformName + '] ' + window.BoostHub.escapeHtml(s.name) + ' — ₹' + s.ratePer1k + '/1k</option>';
+  }).join("");
+
+  var params = new URLSearchParams(window.location.search);
+  var requestedId = params.get("serviceid");
+  var initial = window.BOOSTHUB_CATALOG.getById(requestedId);
+  if (initial) select.value = initial.id;
+
+  function activeSvc() {
+    return window.BOOSTHUB_CATALOG.getById(select.value);
+  }
+
+  function updateSummary() {
+    var svc = activeSvc();
+    if (!svc) return;
+    detailsBox.innerHTML =
+      '<strong>' + window.BoostHub.escapeHtml(svc.name) + '</strong><br>' +
+      '<span style="color:var(--muted);">' + window.BoostHub.escapeHtml(svc.description) + ' · ETA: ' + window.BoostHub.escapeHtml(svc.eta) + '</span>';
+    qtyInput.min = svc.min;
+    qtyInput.max = svc.max;
+    if (!qtyInput.value || Number(qtyInput.value) < svc.min) {
+      qtyInput.value = svc.min;
+    }
+    qtyHint.textContent = "Min: " + svc.min.toLocaleString() + " · Max: " + svc.max.toLocaleString();
+    rateEl.textContent = window.BoostHub.formatINR(svc.ratePer1k);
+    var qty = Math.max(0, Number(qtyInput.value || 0));
+    var cost = (qty / 1000) * svc.ratePer1k;
+    totalEl.textContent = window.BoostHub.formatINR(cost);
+  }
+
+  select.addEventListener("change", function () {
+    var svc = activeSvc();
+    qtyInput.value = svc ? svc.min : 100;
+    if (history.replaceState && svc) {
+      history.replaceState(null, "", "/order/?serviceid=" + encodeURIComponent(svc.id));
+    }
+    updateSummary();
+  });
+  qtyInput.addEventListener("input", updateSummary);
+  updateSummary();
+
+  document.getElementById("order-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var svc = activeSvc();
+    var link = linkInput.value.trim();
+    var qty = parseInt(qtyInput.value, 10);
+    if (!link) {
+      window.BoostHub.toast("Please enter a target link or username.");
+      return;
+    }
+    if (isNaN(qty) || qty < svc.min || qty > svc.max) {
+      window.BoostHub.toast("Quantity must be between " + svc.min + " and " + svc.max + ".");
+      return;
+    }
+    var cost = Math.round(((qty / 1000) * svc.ratePer1k) * 100) / 100;
+    var bal = window.BoostHub.getBalance();
+    if (bal < cost) {
+      window.BoostHub.toast("Insufficient wallet balance. Add funds or spin the wheel!");
+      setTimeout(function () {
+        if (confirm("Your demo balance (" + window.BoostHub.formatINR(bal) + ") is lower than " + window.BoostHub.formatINR(cost) + ". Go to Add Funds?")) {
+          window.location.href = "/addfunds/";
+        }
+      }, 200);
+      return;
+    }
+
+    window.BoostHub.setBalance(bal - cost);
+    window.BoostHub.addTransaction("debit", svc.name + " (" + qty + ")", cost);
+    var orders = window.BoostHub.readJSON(window.BoostHub.KEYS.ORDERS, []);
+    var orderId = "ORD-" + Math.floor(10000 + Math.random() * 90000);
+    orders.unshift({
+      id: orderId,
+      serviceId: svc.id,
+      serviceName: svc.name,
+      platform: svc.platformName,
+      link: link,
+      qty: qty,
+      charge: cost,
+      status: "Pending",
+      createdAt: new Date().toLocaleString()
+    });
+    window.BoostHub.writeJSON(window.BoostHub.KEYS.ORDERS, orders);
+    window.BoostHub.toast("Order " + orderId + " placed!");
+    setTimeout(function () {
+      window.location.href = "/orders/";
+    }, 650);
+  });
+});
+</script>
+
+</body>
+</html>
