@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creator Admin Panel | BoostHub</title>
+  <meta name="description" content="BoostHub Creator Premium Admin Panel — manage services, orders, users, wallet, and Firebase Realtime Database.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/admin.css">
+</head>
+<body>
+  <noscript>
+    <div class="alert-box" style="background:#fee2e2;border-color:#ef4444;color:#991b1b;">
+      JavaScript is required for the admin panel. Please enable it in your browser.
+    </div>
+  </noscript>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand-link" href="/admin/">
+        <span class="brand-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+        <span class="brand-text">Boost<span>Hub</span> <span style="font-size:0.78rem;font-weight:700;color:var(--accent);">ADMIN</span></span>
+      </a>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="btn-secondary" type="button" id="admin-logout-btn" style="padding:6px 10px;font-size:0.8rem;">Sign Out</button>
+        <a class="wallet-pill" href="/" title="Visit Storefront">
+          <span data-wallet-balance>₹0.00</span>
+          <span class="wallet-plus">+</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-main admin-main">
+    <!-- Admin Login Screen -->
+    <div id="admin-login-screen" class="admin-panel">
+      <div class="admin-card">
+        <div class="admin-header">
+          <span class="admin-badge">Creator Premium</span>
+          <h1>Admin Access</h1>
+          <p>Enter your creator admin credentials to manage BoostHub.</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="admin-password">Admin Password</label>
+          <input type="password" class="form-control" id="admin-password" placeholder="Enter admin code">
+        </div>
+        <button class="btn-primary" type="button" id="admin-login-btn">Unlock Admin Panel</button>
+        <p style="margin-top:12px;font-size:0.78rem;color:var(--muted);text-align:center;">
+          Not the creator? Contact support@boosthub.example
+        </p>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard (hidden until logged in) -->
+    <div id="admin-dashboard" class="admin-panel" style="display:none;">
+      <nav class="admin-tabs">
+        <button class="admin-tab active" data-tab="dashboard">Dashboard</button>
+        <button class="admin-tab" data-tab="services">Services</button>
+        <button class="admin-tab" data-tab="orders">Orders</button>
+        <button class="admin-tab" data-tab="users">Users & Wallets</button>
+        <button class="admin-tab" data-tab="firebase">Firebase DB</button>
+        <button class="admin-tab" data-tab="content">Content & SEO</button>
+        <button class="admin-tab" data-tab="settings">Settings</button>
+      </nav>
+
+      <!-- Dashboard Tab -->
+      <section id="tab-dashboard" class="admin-tab-content active">
+        <div class="admin-stats">
+          <div class="stat-card">
+            <div class="stat-value" id="stat-total-services">—</div>
+            <div class="stat-label">Total Services</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-total-orders">—</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-total-users">—</div>
+            <div class="stat-label">Registered Users</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="stat-wallet-total">₹0.00</div>
+            <div class="stat-label">Wallet Pool</div>
+          </div>
+        </div>
+        <div class="panel">
+          <h2>Quick Actions</h2>
+          <div class="admin-grid">
+            <button class="btn-primary admin-quick-btn" onclick="adminSwitchTab('services')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Manage Services</button>
+            <button class="btn-primary admin-quick-btn" onclick="adminSwitchTab('orders')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 12 19 4"/></svg> View Orders</button>
+            <button class="btn-primary admin-quick-btn" onclick="adminSwitchTab('users')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Users & Wallets</button>
+            <button class="btn-primary admin-quick-btn" onclick="adminSwitchTab('firebase')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 8 8 10 8 10z"/></svg> Firebase Realtime DB</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Tab -->
+      <section id="tab-services" class="admin-tab-content">
+        <div class="panel">
+          <h2>Service Catalog Manager</h2>
+          <p class="form-hint">Add, edit, or remove services across Instagram, Facebook, and YouTube.</p>
+          <div class="form-group">
+            <label class="form-label">Platform</label>
+            <select class="form-control" id="svc-platform">
+              <option value="instagram">Instagram</option>
+              <option value="facebook">Facebook</option>
+              <option value="youtube">YouTube</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service Name</label>
+            <input type="text" class="form-control" id="svc-name" placeholder="e.g. Instagram Followers — Standard Boost">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Rate per 1K (₹)</label>
+            <input type="number" class="form-control" id="svc-rate" placeholder="120">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Min Quantity</label>
+            <input type="number" class="form-control" id="svc-min" placeholder="50">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Max Quantity</label>
+            <input type="number" class="form-control" id="svc-max" placeholder="25000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ETA</label>
+            <input type="text" class="form-control" id="svc-eta" placeholder="15 – 45 mins">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" id="svc-desc" rows="3" placeholder="Service description..."></textarea>
+          </div>
+          <button class="btn-primary" type="button" id="svc-save-btn">Save Service</button>
+          <div id="svc-list" class="admin-list" style="margin-top:18px;"></div>
+        </div>
+      </section>
+
+      <!-- Orders Tab -->
+      <section id="tab-orders" class="admin-tab-content">
+        <div class="panel">
+          <h2>Order Management</h2>
+          <p class="form-hint">View, filter, and update order statuses across all users.</p>
+          <div class="filter-tabs">
+            <button class="tab-btn active" data-filter="all">All</button>
+            <button class="tab-btn" data-filter="pending">Pending</button>
+            <button class="tab-btn" data-filter="processing">Processing</button>
+            <button class="tab-btn" data-filter="completed">Completed</button>
+          </div>
+          <div id="orders-list" class="admin-list"></div>
+        </div>
+      </section>
+
+      <!-- Users Tab -->
+      <section id="tab-users" class="admin-tab-content">
+        <div class="panel">
+          <h2>Users & Wallet Manager</h2>
+          <p class="form-hint">Manage user accounts, wallet balances, and transaction history.</p>
+          <div id="users-list" class="admin-list"></div>
+        </div>
+      </section>
+
+      <!-- Firebase Tab -->
+      <section id="tab-firebase" class="admin-tab-content">
+        <div class="panel">
+          <h2>Firebase Realtime Database</h2>
+          <p class="form-hint">Live sync with Firebase project: <strong>hiiii-72d78</strong></p>
+          <div class="admin-grid">
+            <button class="btn-secondary" type="button" id="fb-push-btn">Push Local → Firebase</button>
+            <button class="btn-secondary" type="button" id="fb-pull-btn">Pull Firebase → Local</button>
+            <button class="btn-secondary" type="button" id="fb-status-btn">Check Connection</button>
+          </div>
+          <div id="fb-output" class="admin-list" style="margin-top:14px;font-family:monospace;font-size:0.82rem;background:var(--card-alt);border:1px solid var(--border-subtle);border-radius:10px;padding:12px;max-height:300px;overflow:auto;"></div>
+        </div>
+      </section>
+
+      <!-- Content & SEO Tab -->
+      <section id="tab-content" class="admin-tab-content">
+        <div class="panel">
+          <h2>Content & SEO Manager</h2>
+          <p class="form-hint">Edit page titles, meta descriptions, and canonical URLs.</p>
+          <div class="form-group">
+            <label class="form-label">Page</label>
+            <select class="form-control" id="seo-page">
+              <option value="/">Home</option>
+              <option value="/instagram/">Instagram Services</option>
+              <option value="/facebook/">Facebook Services</option>
+              <option value="/youtube/">YouTube Services</option>
+              <option value="/order/">Place Order</option>
+              <option value="/orders/">My Orders</option>
+              <option value="/addfunds/">Add Funds</option>
+              <option value="/menu/">Menu & Account</option>
+              <option value="/chat/">Support Chat</option>
+              <option value="/share/">Share & Referrals</option>
+              <option value="/install/">Install App</option>
+              <option value="/terms/">Terms of Service</option>
+              <option value="/privacy-policy/">Privacy Policy</option>
+              <option value="/admin/">Admin Panel</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Page Title</label>
+            <input type="text" class="form-control" id="seo-title" placeholder="Page title">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Meta Description</label>
+            <textarea class="form-control" id="seo-desc" rows="3" placeholder="Meta description"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Canonical URL</label>
+            <input type="url" class="form-control" id="seo-canonical" placeholder="https://yourdomain.com/page/">
+          </div>
+          <button class="btn-primary" type="button" id="seo-save-btn">Save SEO Settings</button>
+        </div>
+      </section>
+
+      <!-- Settings Tab -->
+      <section id="tab-settings" class="admin-tab-content">
+        <div class="panel">
+          <h2>System Settings</h2>
+          <div class="form-group">
+            <label class="form-label">Site Name</label>
+            <input type="text" class="form-control" id="setting-site-name" value="BoostHub">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Support Email</label>
+            <input type="email" class="form-control" id="setting-support-email" value="support@boosthub.example">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Admin Password</label>
+            <input type="password" class="form-control" id="setting-admin-password" placeholder="Change admin code">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Currency</label>
+            <select class="form-control" id="setting-currency">
+              <option value="INR">Indian Rupee (₹)</option>
+              <option value="USD">US Dollar ($)</option>
+            </select>
+          </div>
+          <button class="btn-primary" type="button" id="setting-save-btn">Save Settings</button>
+          <div style="margin-top:18px;">
+            <h3 style="font-size:0.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Danger Zone</h3>
+            <button class="btn-secondary" type="button" style="border-color:#ef4444;color:#ef4444;" onclick="if(confirm('Reset all demo data?')){localStorage.clear();location.reload();}">Reset All Demo Data</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/assets/services.js"></script>
+  <script src="/assets/app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script src="/assets/admin.js"></script>
+</body>
+</html>
