@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Funds — UPI Demo Wallet | BoostHub</title>
-  <meta name="description" content="Top up your BoostHub demo wallet with INR using UPI-style payment UI. Simulate instant deposit for testing SMM orders.">
+  <title>Add Funds — UPI Payment via PayZAPI | BoostHub</title>
+  <meta name="description" content="Top up your BoostHub demo wallet with INR using PayZAPI UPI payment gateway. Instant QR code, hosted checkout, and wallet credit.">
   <meta name="theme-color" content="#2563eb">
   <link rel="canonical" href="https://boosthub-seven.vercel.app/addfunds/">
   <meta property="og:title" content="Add Funds — BoostHub">
-  <meta property="og:description" content="UPI-style demo wallet deposit with ₹ INR pricing on BoostHub.">
+  <meta property="og:description" content="UPI payment via PayZAPI gateway with ₹ INR pricing on BoostHub.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://boosthub-seven.vercel.app/addfunds/">
   <link rel="manifest" href="/manifest.json">
@@ -40,8 +40,9 @@
         Current balance: <strong data-wallet-balance>₹0.00</strong>
       </div>
 
-      <div class="alert-box" style="margin-bottom:16px;font-size:0.85rem;">
-        <strong>Static HTML Demo Notice:</strong> Real payment gateways (UPI, Razorpay, Cashfree, etc.) require a backend server to verify transactions. Use the button below to simulate an instant deposit in your browser.
+      <!-- PayZAPI API Key Notice -->
+      <div id="payzapi-key-notice" class="alert-box" style="margin-bottom:16px;display:none;">
+        <strong>PayZAPI not configured.</strong> Go to <a href="/admin/" style="color:var(--accent);font-weight:700;">Admin Panel → Payment Settings</a> to enter your PayZAPI API key.
       </div>
 
       <div class="form-group">
@@ -60,21 +61,46 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Payment Method UI</label>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button type="button" class="btn-secondary active" id="pm-upi">UPI App / QR Code (Demo)</button>
-          <button type="button" class="btn-secondary" id="pm-card">Debit / Credit Card (Demo)</button>
-          <button type="button" class="btn-secondary" id="pm-net">NetBanking (Demo)</button>
-        </div>
+        <label class="form-label">Payment Provider</label>
+        <select class="form-control" id="payzapi-provider">
+          <option value="fampay">FamPay (UPI)</option>
+          <option value="paytm">Paytm (UPI)</option>
+          <option value="bharatpe">BharatPe (UPI)</option>
+          <option value="binance">Binance USDT (BSC)</option>
+        </select>
       </div>
 
       <div class="form-group" style="margin-top:8px;">
-        <button type="button" class="btn-primary" id="deposit-btn">Simulate Instant Deposit</button>
+        <button type="button" class="btn-primary" id="create-payment-btn">Create PayZAPI Payment Order</button>
+      </div>
+
+      <!-- Payment Order Result -->
+      <div id="payment-result" style="margin-top:16px;display:none;">
+        <div class="panel" style="background:var(--accent-soft);border-color:var(--accent);">
+          <h3 style="margin:0 0 12px;color:var(--accent);font-size:1rem;">Payment Order Created</h3>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label class="form-label">Order ID</label>
+            <div style="font-family:monospace;font-size:0.85rem;background:var(--card-alt);padding:8px;border-radius:6px;word-break:break-all;" id="payzapi-order-id"></div>
+          </div>
+          <div class="form-group" style="margin-bottom:8px;">
+            <label class="form-label">Amount</label>
+            <span id="payzapi-amount" style="font-weight:800;color:var(--accent);"></span>
+          </div>
+          <div class="form-group" style="margin-bottom:14px;">
+            <label class="form-label">UPI QR Code</label>
+            <div id="payzapi-qr" style="text-align:center;margin:10px 0;"></div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <a id="payzapi-checkout-url" class="btn-primary" target="_blank" style="flex:1;">Open Hosted Checkout</a>
+            <button type="button" class="btn-secondary" id="check-payment-btn" style="flex:1;">Check Payment Status</button>
+          </div>
+          <div id="payzapi-status" style="margin-top:12px;font-size:0.85rem;min-height:20px;"></div>
+        </div>
       </div>
 
       <h3 style="font-size:1rem;margin:24px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Recent Wallet Activity</h3>
       <div id="txn-list" class="admin-list">
-        <p style="color:var(--muted);font-size:0.88rem;text-align:center;padding:16px;">No transactions yet. Deposit funds or spin the daily wheel!</p>
+        <p style="color:var(--muted);font-size:0.88rem;text-align:center;padding:16px;">No transactions yet. Deposit funds via PayZAPI or spin the daily wheel!</p>
       </div>
     </div>
 
@@ -99,11 +125,31 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
   <script>
 document.addEventListener("DOMContentLoaded", function () {
+  var BH = window.BoostHub;
+  var keyNotice = document.getElementById("payzapi-key-notice");
+  var createBtn = document.getElementById("create-payment-btn");
+  var checkBtn = document.getElementById("check-payment-btn");
+  var resultBox = document.getElementById("payment-result");
+  var orderIdEl = document.getElementById("payzapi-order-id");
+  var amountEl = document.getElementById("payzapi-amount");
+  var qrEl = document.getElementById("payzapi-qr");
+  var checkoutUrlEl = document.getElementById("payzapi-checkout-url");
+  var statusEl = document.getElementById("payzapi-status");
+  var txnList = document.getElementById("txn-list");
+
   var chips = document.querySelectorAll(".amount-chip");
   var customInput = document.getElementById("custom-amount");
-  var depositBtn = document.getElementById("deposit-btn");
-  var txnList = document.getElementById("txn-list");
+  var providerSelect = document.getElementById("payzapi-provider");
   var selectedAmount = 100;
+  var currentOrderId = null;
+
+  // Check if PayZAPI key is configured
+  var payzapiKey = BH.getPayzapiKey();
+  if (!payzapiKey) {
+    keyNotice.style.display = "block";
+    createBtn.disabled = true;
+    createBtn.textContent = "Configure PayZAPI API Key in Admin Panel";
+  }
 
   for (var i = 0; i < chips.length; i++) {
     chips[i].addEventListener("click", function () {
@@ -119,26 +165,10 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedAmount = parseInt(this.value, 10) || 0;
   });
 
-  depositBtn.addEventListener("click", function () {
-    if (!selectedAmount || selectedAmount <= 0) {
-      window.BoostHub.toast("Please enter a valid amount.");
-      return;
-    }
-    var bal = window.BoostHub.getBalance();
-    window.BoostHub.setBalance(bal + selectedAmount);
-    window.BoostHub.addTransaction("credit", "Demo Deposit via UPI", selectedAmount);
-    window.BoostHub.toast("₹" + selectedAmount + " deposited successfully!");
-    renderTxns();
-    customInput.value = "";
-    for (var j = 0; j < chips.length; j++) chips[j].classList.remove("active");
-    chips[0].classList.add("active");
-    selectedAmount = 100;
-  });
-
   function renderTxns() {
-    var txns = window.BoostHub.readJSON(window.BoostHub.KEYS.TXNS, []);
+    var txns = BH.readJSON(BH.KEYS.TXNS, []);
     if (txns.length === 0) {
-      txnList.innerHTML = "<p style='color:var(--muted);font-size:0.88rem;text-align:center;padding:16px;'>No transactions yet. Deposit funds or spin the daily wheel!</p>";
+      txnList.innerHTML = "<p style='color:var(--muted);font-size:0.88rem;text-align:center;padding:16px;'>No transactions yet. Deposit funds via PayZAPI or spin the daily wheel!</p>";
       return;
     }
     var html = "";
@@ -152,6 +182,101 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function escapeHtml(str) {
     return String(str || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  createBtn.addEventListener("click", function () {
+    if (!selectedAmount || selectedAmount <= 0) {
+      BH.toast("Please enter a valid amount.");
+      return;
+    }
+    if (!BH.getPayzapiKey()) {
+      BH.toast("PayZAPI API key not configured.");
+      return;
+    }
+
+    createBtn.disabled = true;
+    createBtn.textContent = "Creating payment order...";
+    statusEl.textContent = "";
+
+    BH.createPayzapiOrder(selectedAmount, {
+      payment_provider: providerSelect.value,
+      client_order_id: "INV-" + BH.readJSON(BH.KEYS.UID, "user") + "-" + Date.now(),
+      customer_name: "BoostHub User",
+      redirect_url: location.origin + "/addfunds/?status=success"
+    }).then(function (data) {
+      currentOrderId = data.order_id || data.id;
+      resultBox.style.display = "block";
+      orderIdEl.textContent = currentOrderId;
+      amountEl.textContent = "₹" + selectedAmount.toFixed(2);
+      checkoutUrlEl.href = data.payment_url || "#";
+      checkoutUrlEl.style.display = data.payment_url ? "inline-block" : "none";
+
+      // Display QR code if provided
+      if (data.qr_image_url) {
+        qrEl.innerHTML = '<img src="' + escapeHtml(data.qr_image_url) + '" alt="UPI QR" style="max-width:200px;border-radius:8px;border:1px solid var(--border-subtle);">';
+      } else if (data.qr_data) {
+        qrEl.innerHTML = '<div style="font-family:monospace;font-size:0.75rem;color:var(--muted);background:var(--card-alt);padding:10px;border-radius:6px;word-break:break-all;">' + escapeHtml(data.qr_data) + '</div>';
+      } else {
+        qrEl.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">Scan QR or use hosted checkout link above.</p>';
+      }
+
+      statusEl.textContent = "Order created. Complete payment using the QR code or checkout link.";
+      statusEl.style.color = "var(--muted)";
+      BH.toast("PayZAPI payment order created!");
+
+      createBtn.disabled = false;
+      createBtn.textContent = "Create PayZAPI Payment Order";
+    }).catch(function (err) {
+      BH.toast(err.message || "Failed to create payment order.");
+      statusEl.textContent = "Error: " + (err.message || "Unknown error");
+      statusEl.style.color = "var(--danger)";
+      createBtn.disabled = false;
+      createBtn.textContent = "Create PayZAPI Payment Order";
+      console.error("PayZAPI create error:", err);
+    });
+  });
+
+  checkBtn.addEventListener("click", function () {
+    if (!currentOrderId) {
+      BH.toast("No payment order to check.");
+      return;
+    }
+    checkBtn.disabled = true;
+    checkBtn.textContent = "Checking...";
+
+    BH.checkPayzapiOrder(currentOrderId).then(function (data) {
+      var status = data.status || "unknown";
+      statusEl.textContent = "Payment status: " + status.toUpperCase();
+      if (status === "completed") {
+        statusEl.style.color = "var(--success)";
+        BH.toast("Payment completed! Crediting wallet...");
+        // Credit wallet
+        var bal = BH.getBalance();
+        BH.setBalance(bal + selectedAmount);
+        BH.addTransaction("credit", "PayZAPI Payment (" + currentOrderId + ")", selectedAmount);
+        renderTxns();
+        setTimeout(function () { resultBox.style.display = "none"; currentOrderId = null; }, 2000);
+      } else if (status === "expired") {
+        statusEl.style.color = "var(--warning)";
+        BH.toast("Payment order expired.");
+      } else {
+        statusEl.style.color = "var(--muted)";
+        BH.toast("Payment still pending. Please complete the payment.");
+      }
+      checkBtn.disabled = false;
+      checkBtn.textContent = "Check Payment Status";
+    }).catch(function (err) {
+      BH.toast(err.message || "Failed to check payment status.");
+      checkBtn.disabled = false;
+      checkBtn.textContent = "Check Payment Status";
+      console.error("PayZAPI check error:", err);
+    });
+  });
+
+  // Auto-check status from URL param
+  var params = new URLSearchParams(window.location.search);
+  if (params.get("status") === "success" && currentOrderId) {
+    setTimeout(function () { checkBtn.click(); }, 1000);
   }
 
   renderTxns();
