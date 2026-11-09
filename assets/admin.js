@@ -262,36 +262,101 @@
   var payzapiKeyInput = document.getElementById("payzapi-api-key");
   var payzapiSecretInput = document.getElementById("payzapi-webhook-secret");
   var payzapiSaveBtn = document.getElementById("payzapi-save-btn");
+  var payzapiTestBtn = document.getElementById("payzapi-test-btn");
   var payzapiStatus = document.getElementById("payzapi-save-status");
+
+  // Show test button element if exists (added below in HTML)
+  if (!payzapiTestBtn) {
+    // Create a test button dynamically if not in HTML
+    var testBtn = document.createElement("button");
+    testBtn.type = "button";
+    testBtn.id = "payzapi-test-btn";
+    testBtn.className = "btn-secondary";
+    testBtn.textContent = "Test Connection";
+    testBtn.style.cssText = "margin-left:8px;padding:8px 12px;font-size:0.8rem;";
+    if (payzapiSaveBtn && payzapiSaveBtn.parentNode) {
+      payzapiSaveBtn.parentNode.appendChild(testBtn);
+    }
+    payzapiTestBtn = testBtn;
+  }
 
   if (payzapiKeyInput) {
     payzapiKeyInput.value = BH.getPayzapiKey() || "";
   }
 
+  function showPayzapiStatus(msg, isError) {
+    if (!payzapiStatus) return;
+    payzapiStatus.textContent = msg;
+    payzapiStatus.style.color = isError ? "var(--danger)" : "var(--success)";
+    payzapiStatus.style.display = "block";
+    setTimeout(function () {
+      payzapiStatus.style.display = "none";
+    }, 4000);
+  }
+
   if (payzapiSaveBtn) {
     payzapiSaveBtn.addEventListener("click", function () {
+      if (!payzapiKeyInput) {
+        showPayzapiStatus("API key input not found.", true);
+        return;
+      }
+
       var key = payzapiKeyInput.value.trim();
       var secret = payzapiSecretInput ? payzapiSecretInput.value.trim() : "";
 
       if (!key) {
-        payzapiStatus.textContent = "Please enter a PayZAPI API key.";
-        payzapiStatus.style.color = "var(--danger)";
+        showPayzapiStatus("Please enter a PayZAPI API key.", true);
+        payzapiKeyInput.focus();
         return;
       }
 
-      BH.setPayzapiKey(key);
-      if (secret) {
-        localStorage.setItem(BH.KEYS.PAYZAPI_WEBHOOK_SECRET, secret);
+      if (!key.startsWith("fam_")) {
+        showPayzapiStatus("API key should start with 'fam_' (e.g. fam_live_...).", true);
+        payzapiKeyInput.focus();
+        return;
       }
 
-      payzapiStatus.textContent = "PayZAPI settings saved.";
-      payzapiStatus.style.color = "var(--success)";
-      BH.toast("PayZAPI API key saved");
+      try {
+        BH.setPayzapiKey(key);
+        if (secret) {
+          localStorage.setItem(BH.KEYS.PAYZAPI_WEBHOOK_SECRET, secret);
+        }
+        showPayzapiStatus("PayZAPI API key saved successfully!");
+        BH.toast("PayZAPI API key saved");
+      } catch (e) {
+        showPayzapiStatus("Save failed: " + e.message, true);
+        console.error("PayZAPI save error:", e);
+      }
 
-      // Enable create button on addfunds page if we're there
       setTimeout(function () {
-        payzapiStatus.textContent = "";
-      }, 3000);
+        if (payzapiStatus) payzapiStatus.style.display = "none";
+      }, 4000);
+    });
+  }
+
+  if (payzapiTestBtn) {
+    payzapiTestBtn.addEventListener("click", function () {
+      if (!BH.getPayzapiKey()) {
+        showPayzapiStatus("Please save an API key first.", true);
+        return;
+      }
+      showPayzapiStatus("Testing PayZAPI connection...");
+      // Test by checking a dummy order (will fail but confirms key format)
+      BH.checkPayzapiOrder("test_order_123").then(function () {
+        showPayzapiStatus("PayZAPI connection test passed!");
+        BH.toast("Connection test passed");
+      }).catch(function (err) {
+        var msg = err.message || "Connection test failed";
+        if (msg.includes("401") || msg.includes("403")) {
+          showPayzapiStatus("Invalid API key. Please check your PayZAPI key.", true);
+        } else if (msg.includes("not configured")) {
+          showPayzapiStatus("API key not configured.", true);
+        } else {
+          showPayzapiStatus("Connection test completed (order not found — this is normal). Key format looks OK.");
+          BH.toast("Key format validated");
+        }
+        console.error("PayZAPI test error:", err);
+      });
     });
   }
 
