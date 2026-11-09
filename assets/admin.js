@@ -257,6 +257,45 @@
   });
 
   /*=============================================================================
+   * PAYZAPI SETTINGS
+   *===========================================================================*/
+  var payzapiKeyInput = document.getElementById("payzapi-api-key");
+  var payzapiSecretInput = document.getElementById("payzapi-webhook-secret");
+  var payzapiSaveBtn = document.getElementById("payzapi-save-btn");
+  var payzapiStatus = document.getElementById("payzapi-save-status");
+
+  if (payzapiKeyInput) {
+    payzapiKeyInput.value = BH.getPayzapiKey() || "";
+  }
+
+  if (payzapiSaveBtn) {
+    payzapiSaveBtn.addEventListener("click", function () {
+      var key = payzapiKeyInput.value.trim();
+      var secret = payzapiSecretInput ? payzapiSecretInput.value.trim() : "";
+
+      if (!key) {
+        payzapiStatus.textContent = "Please enter a PayZAPI API key.";
+        payzapiStatus.style.color = "var(--danger)";
+        return;
+      }
+
+      BH.setPayzapiKey(key);
+      if (secret) {
+        localStorage.setItem(BH.KEYS.PAYZAPI_WEBHOOK_SECRET, secret);
+      }
+
+      payzapiStatus.textContent = "PayZAPI settings saved.";
+      payzapiStatus.style.color = "var(--success)";
+      BH.toast("PayZAPI API key saved");
+
+      // Enable create button on addfunds page if we're there
+      setTimeout(function () {
+        payzapiStatus.textContent = "";
+      }, 3000);
+    });
+  }
+
+  /*=============================================================================
    * UTILS
    *===========================================================================*/
   function escapeHtml(str) {
