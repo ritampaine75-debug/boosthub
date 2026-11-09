@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Share & Referrals | BoostHub</title>
-  <meta name="description" content="Share BoostHub with friends.">
+  <title>Share & Referrals — Invite Friends | BoostHub</title>
+  <meta name="description" content="Share your unique referral link and invite friends to BoostHub. Earn rewards when they join and place orders.">
   <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://boosthub-seven.vercel.app/share/">
+  <meta property="og:title" content="Share & Referrals — BoostHub">
+  <meta property="og:description" content="Invite friends to BoostHub and earn referral rewards.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boosthub-seven.vercel.app/share/">
   <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -24,28 +30,44 @@
   </header>
 
   <main class="app-main">
-    
-<div class="page-header-row">
-  <a class="back-btn" href="/menu/" aria-label="Back to menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
-  <h1 class="section-title" style="margin:0;">Share &amp; Referrals</h1>
-</div>
-<div class="panel">
-  <h2 style="margin:0 0 8px;font-size:1.1rem;">Invite Friends</h2>
-  <p style="color:var(--muted);font-size:0.9rem;margin:0 0 14px;">Share your unique referral URL below. (Referral payouts require backend tracking when deployed live.)</p>
-  <div class="form-group">
-    <input id="ref-url-input" class="form-control" type="text" readonly>
-  </div>
-  <button type="button" id="copy-ref-btn" class="btn-primary">Copy Referral Link</button>
-</div>
+    <div class="page-header-row">
+      <a class="back-btn" href="/menu/" aria-label="Back to menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+      <h1 class="section-title" style="margin:0;">Share &amp; Referrals</h1>
+    </div>
+
+    <div class="panel">
+      <h2>Invite Friends</h2>
+      <p style="color:var(--muted);font-size:0.9rem;margin-bottom:16px;">Share your unique referral URL below. (Referral payouts require backend tracking when deployed live.)</p>
+
+      <div class="form-group">
+        <label class="form-label">Your Referral Link</label>
+        <div style="display:flex;gap:8px;">
+          <input type="url" class="form-control" id="referral-link" value="" readonly>
+          <button type="button" class="btn-primary" id="copy-ref" style="width:auto;padding:11px 16px;font-size:0.85rem;">Copy</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Share Via</label>
+        <div style="display:flex;gap:8px;">
+          <a href="https://wa.me/?text=Join%20BoostHub%20%E2%80%A2%20Social%20media%20growth%20services%20with%20%E2%82%B9%20pricing" class="btn-secondary" style="flex:1;">WhatsApp</a>
+          <a href="https://t.me/share/url?url=https://boosthub-seven.vercel.app/&text=Join%20BoostHub" class="btn-secondary" style="flex:1;">Telegram</a>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https://boosthub-seven.vercel.app/" class="btn-secondary" style="flex:1;">Facebook</a>
+          <a href="https://twitter.com/intent/tweet?text=Join%20BoostHub%20%E2%80%A2%20SMM%20services%20with%20%E2%82%B9%20pricing&url=https://boosthub-seven.vercel.app/" class="btn-secondary" style="flex:1;">Twitter/X</a>
+        </div>
+      </div>
+
+      <div class="alert-box" style="margin-top:16px;font-size:0.85rem;">
+        Earn ₹10 demo credit for every friend who joins using your link. Payouts require backend tracking when deployed live.
+      </div>
+    </div>
 
   </main>
 
-  
-<div class="fab-stack">
-  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
-  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
-</div>
-
+  <div class="fab-stack">
+    <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+    <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+  </div>
 
   <nav class="bottom-nav" aria-label="Main Navigation">
     <div class="bottom-nav-inner">
@@ -57,23 +79,20 @@
 
   <script src="/assets/services.js"></script>
   <script src="/assets/app.js"></script>
-  
-<script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script>
 document.addEventListener("DOMContentLoaded", function () {
   var uid = window.BoostHub.ensureUserId();
-  var urlInput = document.getElementById("ref-url-input");
-  urlInput.value = window.location.origin + "/?ref=" + encodeURIComponent(uid);
-  document.getElementById("copy-ref-btn").addEventListener("click", function () {
-    urlInput.select();
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(urlInput.value);
-    } else {
-      document.execCommand("copy");
-    }
+  var refInput = document.getElementById("referral-link");
+  refInput.value = location.origin + "/share/?ref=" + uid;
+
+  document.getElementById("copy-ref").addEventListener("click", function () {
+    refInput.select();
+    document.execCommand("copy");
     window.BoostHub.toast("Referral link copied!");
   });
 });
 </script>
-
 </body>
 </html>
