@@ -1,6 +1,22 @@
 (function () {
   "use strict";
 
+  /*=============================================================================
+   * FIREBASE CONFIG — BoostHub Realtime Database
+   *===========================================================================*/
+  const firebaseConfig = {
+    apiKey: "AIzaSyCChxWVg-w1TiertkXlUrfUgcC19y-CPNw",
+    authDomain: "hiiii-72d78.firebaseapp.com",
+    databaseURL: "https://hiiii-72d78-default-rtdb.firebaseio.com",
+    projectId: "hiiii-72d78",
+    storageBucket: "hiiii-72d78.firebasestorage.app",
+    messagingSenderId: "560685164053",
+    appId: "1:560685164053:web:7f672f7503160ec868901c"
+  };
+
+  /*=============================================================================
+   * LOCAL STORAGE KEYS
+   *===========================================================================*/
   var KEYS = {
     UID: "boosthub_uid",
     WALLET: "boosthub_wallet",
@@ -9,7 +25,8 @@
     THEME: "boosthub_theme",
     DARK: "boosthub_dark",
     LAST_SPIN: "boosthub_last_spin",
-    CHAT: "boosthub_chat"
+    CHAT: "boosthub_chat",
+    ADMIN: "boosthub_admin"
   };
 
   var REWARDS = [
@@ -23,6 +40,50 @@
     { label: "₹50", amount: 50, color: "#ef4444" }
   ];
 
+  /*=============================================================================
+   * FIREBASE REALTIME DATABASE (lazy init)
+   *===========================================================================*/
+  var firebase = null;
+  var fbDb = null;
+  var fbReady = false;
+
+  function initFirebase() {
+    if (typeof window.firebase === "undefined" || fbReady) return;
+    firebase = window.firebase;
+    try {
+      firebase.initializeApp(firebaseConfig);
+      fbDb = firebase.database();
+      fbReady = true;
+      console.log("[BoostHub] Firebase Realtime Database initialized");
+    } catch (e) {
+      console.error("[BoostHub] Firebase init error:", e);
+    }
+  }
+
+  function fbPath(key) {
+    return "boosthub/" + key;
+  }
+
+  function fbSet(path, val) {
+    if (!fbReady) return Promise.resolve();
+    return fbDb.ref(fbPath(path)).set(val);
+  }
+
+  function fbGet(path) {
+    if (!fbReady) return Promise.resolve(null);
+    return fbDb.ref(fbPath(path)).once("value").then(function (snap) {
+      return snap.val();
+    });
+  }
+
+  function fbPush(path, val) {
+    if (!fbReady) return Promise.resolve();
+    return fbDb.ref(fbPath(path)).push(val);
+  }
+
+  /*=============================================================================
+   * LOCAL STORAGE HELPERS
+   *===========================================================================*/
   function readJSON(key, fallback) {
     try {
       var raw = localStorage.getItem(key);
@@ -59,6 +120,8 @@
         } catch (err) {}
       };
     } catch (e) {}
+    // Sync to Firebase
+    fbSet("users/" + uid, { uid: uid, createdAt: Date.now(), updatedAt: Date.now() });
     return uid;
   }
 
@@ -71,6 +134,8 @@
     var clean = Math.max(0, Math.round(Number(val) * 100) / 100);
     localStorage.setItem(KEYS.WALLET, clean.toFixed(2));
     syncWalletUI();
+    var uid = localStorage.getItem(KEYS.UID);
+    if (uid) fbSet("users/" + uid + "/wallet", { balance: clean, updatedAt: Date.now() });
     return clean;
   }
 
@@ -84,6 +149,8 @@
       createdAt: new Date().toLocaleString()
     });
     writeJSON(KEYS.TXNS, txns.slice(0, 40));
+    var uid = localStorage.getItem(KEYS.UID);
+    if (uid) fbPush("transactions/" + uid, { type: type, title: title, amount: Number(amount), createdAt: new Date().toISOString() });
   }
 
   function formatINR(num) {
@@ -107,6 +174,34 @@
     }
   }
 
+  /*=============================================================================
+   * ADMIN CONTROL (Creator Premium)
+   *===========================================================================*/
+  function isAdmin() {
+    return localStorage.getItem(KEYS.ADMIN) === "true";
+  }
+
+  function setAdmin(val) {
+    localStorage.setItem(KEYS.ADMIN, val === true ? "true" : "false");
+  }
+
+  function adminLogin(password) {
+    // Creator premium admin code — change this in production
+    if (password === "boosthub_admin_2026") {
+      setAdmin(true);
+      fbSet("admin/sessions/" + Date.now(), { uid: localStorage.getItem(KEYS.UID), action: "login", at: new Date().toISOString() });
+      return true;
+    }
+    return false;
+  }
+
+  function adminLogout() {
+    setAdmin(false);
+  }
+
+  /*=============================================================================
+   * THEME
+   *===========================================================================*/
   function applyTheme(themeName, isDark) {
     var body = document.body;
     body.classList.remove("theme-blue", "theme-green", "theme-red", "theme-yellow", "theme-purple");
@@ -156,6 +251,9 @@
     }
   }
 
+  /*=============================================================================
+   * TOAST
+   *===========================================================================*/
   function showToast(message) {
     var el = document.getElementById("bh-toast");
     if (!el) {
@@ -172,6 +270,9 @@
     }, 2600);
   }
 
+  /*=============================================================================
+   * DEMO TICKER
+   *===========================================================================*/
   function initTicker() {
     var tickerEl = document.getElementById("demo-ticker-text");
     if (!tickerEl) return;
@@ -189,6 +290,9 @@
     }, 3500);
   }
 
+  /*=============================================================================
+   * SPIN WHEEL
+   *===========================================================================*/
   function buildWheelSVG() {
     var n = REWARDS.length;
     var cx = 120;
@@ -317,13 +421,16 @@
     });
   }
 
+  /*=============================================================================
+   * BOTTOM NAV
+   *===========================================================================*/
   function highlightBottomNav() {
     var path = window.location.pathname.replace(/\/index\.html$/, "/");
     var links = document.querySelectorAll(".bottom-nav .nav-item");
     for (var i = 0; i < links.length; i++) {
       var href = links[i].getAttribute("href");
       var active = false;
-      if (href === "/" && (path === "/" || path === "/instagram/" || path === "/facebook/" || path === "/youtube/" || path === "/order/")) {
+      if (href === "/" && (path === "/" || path.indexOf("/instagram/") === 0 || path.indexOf("/facebook/") === 0 || path.indexOf("/youtube/") === 0 || path === "/order/")) {
         active = true;
       } else if (href !== "/" && path.indexOf(href.replace(/\/$/, "")) === 0) {
         active = true;
@@ -332,7 +439,11 @@
     }
   }
 
+  /*=============================================================================
+   * INIT
+   *===========================================================================*/
   document.addEventListener("DOMContentLoaded", function () {
+    initFirebase();
     ensureUserId();
     syncWalletUI();
     initTheme();
@@ -351,6 +462,16 @@
     writeJSON: writeJSON,
     formatINR: formatINR,
     escapeHtml: escapeHtml,
-    toast: showToast
+    toast: showToast,
+    firebase: firebase,
+    fbDb: fbDb,
+    fbReady: fbReady,
+    fbSet: fbSet,
+    fbGet: fbGet,
+    fbPush: fbPush,
+    isAdmin: isAdmin,
+    setAdmin: setAdmin,
+    adminLogin: adminLogin,
+    adminLogout: adminLogout
   };
 })();
