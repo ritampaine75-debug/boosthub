@@ -3,10 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support Chat | BoostHub</title>
-  <meta name="description" content="Interactive support chat interface for BoostHub.">
+  <title>Support Chat — BoostHub Help Desk</title>
+  <meta name="description" content="Ask questions about orders, wallet deposits, or refill rules on BoostHub support chat. Demo assistant available.">
   <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://boosthub-seven.vercel.app/chat/">
+  <meta property="og:title" content="Support Chat — BoostHub">
+  <meta property="og:description" content="BoostHub support chat for orders, wallet, and refill questions.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://boosthub-seven.vercel.app/chat/">
   <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -24,33 +30,42 @@
   </header>
 
   <main class="app-main">
-    
-<div class="page-header-row">
-  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
-  <div>
-    <h1 class="section-title" style="margin:0;">Support Chat</h1>
-    <div style="font-size:0.86rem;color:var(--muted);">Email: support@boosthub.example · Demo Assistant</div>
-  </div>
-</div>
+    <div class="page-header-row">
+      <a class="back-btn" href="/menu/" aria-label="Back to menu"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+      <h1 class="section-title" style="margin:0;">Support Chat</h1>
+    </div>
 
-<div class="panel">
-  <div id="chat-window" class="chat-window"></div>
+    <div class="panel">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <span class="platform-icon icon-accent" style="width:32px;height:32px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <div>
+          <div style="font-weight:700;font-size:0.9rem;">support@boosthub.example</div>
+          <div style="font-size:0.8rem;color:var(--muted);">Demo Assistant</div>
+        </div>
+      </div>
 
-  <div class="filter-tabs" style="margin-bottom:10px;">
-    <button type="button" class="tab-btn" data-quick-msg="Where is my order?">Order Status</button>
-    <button type="button" class="tab-btn" data-quick-msg="How do deposits work?">Deposit Help</button>
-    <button type="button" class="tab-btn" data-quick-msg="What is the refill policy?">Refill Policy</button>
-  </div>
+      <div class="chat-window" id="chat-window">
+        <div class="chat-msg chat-bot">Hi! Welcome to BoostHub Demo Support. Ask about orders, wallet deposits, or refill rules.</div>
+      </div>
 
-  <form id="chat-form" class="chat-input-row">
-    <input id="chat-input" class="form-control" type="text" placeholder="Type your message..." required>
-    <button type="submit" class="btn-primary" style="width:auto;padding:11px 18px;">Send</button>
-  </form>
-</div>
+      <div class="chat-input-row">
+        <input type="text" class="form-control" id="chat-input" placeholder="Type your message...">
+        <button type="button" class="btn-primary" id="chat-send" style="width:auto;padding:11px 16px;font-size:0.85rem;">Send</button>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:8px;">
+        <button type="button" class="btn-secondary" style="font-size:0.8rem;padding:6px 10px;" onclick="quickMsg('Order Status')">Order Status</button>
+        <button type="button" class="btn-secondary" style="font-size:0.8rem;padding:6px 10px;" onclick="quickMsg('Deposit Help')">Deposit Help</button>
+        <button type="button" class="btn-secondary" style="font-size:0.8rem;padding:6px 10px;" onclick="quickMsg('Refill Policy')">Refill Policy</button>
+      </div>
+    </div>
 
   </main>
 
-  
+  <div class="fab-stack">
+    <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+    <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+  </div>
 
   <nav class="bottom-nav" aria-label="Main Navigation">
     <div class="bottom-nav-inner">
@@ -62,55 +77,48 @@
 
   <script src="/assets/services.js"></script>
   <script src="/assets/app.js"></script>
-  
-<script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+  <script>
+function quickMsg(msg) {
+  document.getElementById("chat-input").value = msg;
+}
 document.addEventListener("DOMContentLoaded", function () {
-  var win = document.getElementById("chat-window");
-  var input = document.getElementById("chat-input");
-  var msgs = window.BoostHub.readJSON(window.BoostHub.KEYS.CHAT, [
-    { role: "bot", text: "Hi! Welcome to BoostHub Demo Support. Ask about orders, wallet deposits, or refill rules." }
-  ]);
+  var chatWindow = document.getElementById("chat-window");
+  var chatInput = document.getElementById("chat-input");
+  var chatSend = document.getElementById("chat-send");
 
-  function replyFor(text) {
-    var t = text.toLowerCase();
-    if (t.indexOf("order") !== -1) return "You can inspect live demo order progress in My Orders (/orders/) and click 'Advance Demo Status' to test state changes.";
-    if (t.indexOf("deposit") !== -1 || t.indexOf("fund") !== -1 || t.indexOf("pay") !== -1) return "Open Add Funds (/addfunds/) to simulate adding INR balance, or claim a daily bonus from the Spin Wheel!";
-    if (t.indexOf("refill") !== -1) return "Eligible High Retention services include a 30-day refill policy when accounts remain public.";
-    return "Thanks for reaching out! In a production setup, connect this chat UI to your backend ticket API or support desk.";
+  function addMsg(text, type) {
+    var div = document.createElement("div");
+    div.className = "chat-msg chat-" + type;
+    div.textContent = text;
+    chatWindow.appendChild(div);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
-  function render() {
-    win.innerHTML = msgs.map(function (m) {
-      var cls = m.role === "user" ? "chat-msg chat-user" : "chat-msg chat-bot";
-      return '<div class="' + cls + '">' + window.BoostHub.escapeHtml(m.text) + '</div>';
-    }).join("");
-    win.scrollTop = win.scrollHeight;
+  function send() {
+    var text = chatInput.value.trim();
+    if (!text) return;
+    addMsg(text, "user");
+    chatInput.value = "";
+    setTimeout(function () {
+      var replies = [
+        "Thanks! I've noted your request.",
+        "Our demo team will respond shortly.",
+        "Check your order status in the My Orders section.",
+        "For UPI deposits, use the Add Funds page to simulate a top-up.",
+        "Refill policy: 30-day drop protection on eligible services."
+      ];
+      var r = replies[Math.floor(Math.random() * replies.length)];
+      addMsg(r, "bot");
+    }, 800);
   }
 
-  function send(text) {
-    if (!text.trim()) return;
-    msgs.push({ role: "user", text: text.trim() });
-    msgs.push({ role: "bot", text: replyFor(text) });
-    window.BoostHub.writeJSON(window.BoostHub.KEYS.CHAT, msgs.slice(-30));
-    render();
-  }
-
-  var quickBtns = document.querySelectorAll("[data-quick-msg]");
-  for (var i = 0; i < quickBtns.length; i++) {
-    quickBtns[i].addEventListener("click", function () {
-      send(this.getAttribute("data-quick-msg"));
-    });
-  }
-
-  document.getElementById("chat-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    send(input.value);
-    input.value = "";
+  chatSend.addEventListener("click", send);
+  chatInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") send();
   });
-
-  render();
 });
 </script>
-
 </body>
 </html>
