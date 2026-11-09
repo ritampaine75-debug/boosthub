@@ -1,0 +1,10 @@
+# Optional clean-URL redirects if someone visits old .php paths
+[[redirects]]
+  from = "/chat.php"
+  to = "/chat/"
+  status = 301
+
+[[redirects]]
+  from = "/order.php"
+  to = "/order/"
+  status = 301
