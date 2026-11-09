@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Funds | BoostHub</title>
+  <meta name="description" content="Top up your BoostHub demo wallet balance.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand-link" href="/">
+        <span class="brand-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+        <span class="brand-text">Boost<span>Hub</span></span>
+      </a>
+      <a class="wallet-pill" href="/addfunds/" title="Wallet Balance">
+        <span data-wallet-balance>₹0.00</span>
+        <span class="wallet-plus">+</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    
+<div class="page-header-row">
+  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+  <div>
+    <h1 class="section-title" style="margin:0;">Add Funds</h1>
+    <div style="font-size:0.86rem;color:var(--muted);">Current balance: <strong data-wallet-balance>₹0.00</strong></div>
+  </div>
+</div>
+
+<div class="alert-box">
+  <strong>Static HTML Demo Notice:</strong> Real payment gateways (UPI, Razorpay, Cashfree, etc.) require a backend server to verify transactions. Use the button below to simulate an instant deposit in your browser.
+</div>
+
+<div class="panel">
+  <div class="form-label">Quick Select Amount (INR)</div>
+  <div class="amount-grid">
+    <button type="button" class="amount-chip active" data-amt="100">₹100</button>
+    <button type="button" class="amount-chip" data-amt="250">₹250</button>
+    <button type="button" class="amount-chip" data-amt="500">₹500</button>
+    <button type="button" class="amount-chip" data-amt="1000">₹1,000</button>
+  </div>
+
+  <form id="funds-form">
+    <div class="form-group">
+      <label class="form-label" for="fund-amount">Custom Amount (₹)</label>
+      <input id="fund-amount" class="form-control" type="number" min="10" max="50000" value="100" required>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="fund-method">Payment Method UI</label>
+      <select id="fund-method" class="form-control">
+        <option value="UPI Demo">UPI App / QR Code (Demo)</option>
+        <option value="Card Demo">Debit / Credit Card (Demo)</option>
+        <option value="NetBanking Demo">NetBanking (Demo)</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-primary">Simulate Instant Deposit</button>
+  </form>
+</div>
+
+<h2 class="section-title" style="font-size:1.1rem;margin-top:20px;">Recent Wallet Activity</h2>
+<div id="txn-list" class="service-stack"></div>
+
+  </main>
+
+  
+<div class="fab-stack">
+  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+</div>
+
+
+  <nav class="bottom-nav" aria-label="Main Navigation">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="/orders/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><span>My Orders</span></a>
+      <a class="nav-item" href="/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Create Order</span></a>
+      <a class="nav-item" href="/menu/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></a>
+    </div>
+  </nav>
+
+  <script src="/assets/services.js"></script>
+  <script src="/assets/app.js"></script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var amtInput = document.getElementById("fund-amount");
+  var methodSelect = document.getElementById("fund-method");
+  var chips = document.querySelectorAll("[data-amt]");
+  var txnList = document.getElementById("txn-list");
+
+  function renderTxns() {
+    var txns = window.BoostHub.readJSON(window.BoostHub.KEYS.TXNS, []);
+    if (!txns.length) {
+      txnList.innerHTML = '<div class="panel" style="color:var(--muted);text-align:center;">No transactions yet. Deposit funds or spin the daily wheel!</div>';
+      return;
+    }
+    txnList.innerHTML = txns.map(function (t) {
+      var isDebit = t.type === "debit";
+      var sign = isDebit ? "-" : "+";
+      var color = isDebit ? "var(--danger)" : "var(--success)";
+      return (
+        '<div class="panel" style="margin-bottom:0;display:flex;justify-content:space-between;align-items:center;gap:10px;">' +
+          '<div>' +
+            '<div style="font-weight:700;font-size:0.92rem;">' + window.BoostHub.escapeHtml(t.title) + '</div>' +
+            '<div style="font-size:0.78rem;color:var(--muted);">' + window.BoostHub.escapeHtml(t.id) + ' · ' + window.BoostHub.escapeHtml(t.createdAt) + '</div>' +
+          '</div>' +
+          '<strong style="color:' + color + ';white-space:nowrap;">' + sign + window.BoostHub.formatINR(t.amount) + '</strong>' +
+        '</div>'
+      );
+    }).join("");
+  }
+
+  for (var i = 0; i < chips.length; i++) {
+    chips[i].addEventListener("click", function () {
+      for (var j = 0; j < chips.length; j++) chips[j].classList.remove("active");
+      this.classList.add("active");
+      amtInput.value = this.getAttribute("data-amt");
+    });
+  }
+
+  document.getElementById("funds-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var val = parseFloat(amtInput.value);
+    if (isNaN(val) || val < 10) {
+      window.BoostHub.toast("Minimum demo deposit is ₹10.");
+      return;
+    }
+    window.BoostHub.setBalance(window.BoostHub.getBalance() + val);
+    window.BoostHub.addTransaction("credit", "Deposit (" + methodSelect.value + ")", val);
+    window.BoostHub.toast("Added " + window.BoostHub.formatINR(val) + " to demo wallet!");
+    renderTxns();
+  });
+
+  renderTxns();
+});
+</script>
+
+</body>
+</html>
