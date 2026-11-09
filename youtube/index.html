@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Services | BoostHub</title>
+  <meta name="description" content="Explore YouTube growth packages and pricing on BoostHub.">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand-link" href="/">
+        <span class="brand-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+        <span class="brand-text">Boost<span>Hub</span></span>
+      </a>
+      <a class="wallet-pill" href="/addfunds/" title="Wallet Balance">
+        <span data-wallet-balance>₹0.00</span>
+        <span class="wallet-plus">+</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    
+<div class="page-header-row">
+  <a class="back-btn" href="/" aria-label="Back to home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></a>
+  <div>
+    <h1 class="section-title" style="margin:0;">YouTube Services</h1>
+    <div style="font-size:0.86rem;color:var(--muted);">Video views, subscribers, likes & watch time hours</div>
+  </div>
+</div>
+
+<div id="platform-service-list" class="service-stack"></div>
+
+  </main>
+
+  
+<div class="fab-stack">
+  <button type="button" class="fab-btn fab-accent" data-open-spin><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span>Daily Bonus</span></button>
+  <a class="fab-btn" href="/chat/"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Support</span></a>
+</div>
+
+
+  <nav class="bottom-nav" aria-label="Main Navigation">
+    <div class="bottom-nav-inner">
+      <a class="nav-item" href="/orders/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg><span>My Orders</span></a>
+      <a class="nav-item" href="/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><span>Create Order</span></a>
+      <a class="nav-item" href="/menu/"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg><span>Menu</span></a>
+    </div>
+  </nav>
+
+  <script src="/assets/services.js"></script>
+  <script src="/assets/app.js"></script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var container = document.getElementById("platform-service-list");
+  var platform = window.BOOSTHUB_CATALOG.platforms["youtube"];
+  if (!platform || !container) return;
+  container.innerHTML = platform.services.map(function (svc) {
+    return (
+      '<a class="service-card" href="/order/?serviceid=' + encodeURIComponent(svc.id) + '">' +
+        '<div class="service-card-left">' +
+          '<span class="platform-icon icon-youtube"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none"/></svg></span>' +
+          '<div class="service-meta">' +
+            '<div class="service-title">' + window.BoostHub.escapeHtml(svc.name) + '</div>' +
+            '<div class="service-desc">' + window.BoostHub.escapeHtml(svc.category) + ' · ETA: ' + window.BoostHub.escapeHtml(svc.eta) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="service-right">' +
+          '<span class="price-tag">₹' + svc.ratePer1k + '/1k</span>' +
+          '<span class="arrow-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>' +
+        '</div>' +
+      '</a>'
+    );
+  }).join("");
+});
+</script>
+
+</body>
+</html>
