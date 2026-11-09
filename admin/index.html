@@ -64,6 +64,7 @@
         <button class="admin-tab" data-tab="firebase">Firebase DB</button>
         <button class="admin-tab" data-tab="content">Content & SEO</button>
         <button class="admin-tab" data-tab="settings">Settings</button>
+        <button class="admin-tab" data-tab="payzapi">PayZAPI Payments</button>
       </nav>
 
       <!-- Dashboard Tab -->
@@ -214,6 +215,49 @@
             <input type="url" class="form-control" id="seo-canonical" placeholder="https://yourdomain.com/page/">
           </div>
           <button class="btn-primary" type="button" id="seo-save-btn">Save SEO Settings</button>
+        </div>
+      </section>
+
+      <!-- PayZAPI Payments Tab -->
+      <section id="tab-payzapi" class="admin-tab-content">
+        <div class="panel">
+          <h2>PayZAPI Payment Gateway Settings</h2>
+          <p class="form-hint">Configure your PayZAPI API key for real UPI payments via <a href="https://payzapi.in/docs" target="_blank" style="color:var(--accent);">PayZAPI documentation</a>.</p>
+
+          <div class="form-group">
+            <label class="form-label">PayZAPI API Key</label>
+            <input type="text" class="form-control" id="payzapi-api-key" placeholder="fam_live_... or fam_test_...">
+            <div class="form-hint">Get your key from PayZAPI Merchant Console → API Keys</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Webhook Secret (optional)</label>
+            <input type="text" class="form-control" id="payzapi-webhook-secret" placeholder="whsec_...">
+            <div class="form-hint">Used to verify HMAC-SHA256 webhook signatures from PayZAPI</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Webhook URL</label>
+            <input type="url" class="form-control" id="payzapi-webhook-url" value="https://boosthub-seven.vercel.app/addfunds/?webhook=1" readonly>
+            <div class="form-hint">Configure this in your PayZAPI dashboard. Note: Static sites cannot receive webhooks directly; use the /check endpoint to poll payment status.</div>
+          </div>
+
+          <button class="btn-primary" type="button" id="payzapi-save-btn">Save PayZAPI Settings</button>
+          <div id="payzapi-save-status" style="margin-top:10px;font-size:0.85rem;min-height:20px;"></div>
+
+          <div style="margin-top:18px;">
+            <h3 style="font-size:0.9rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;">Supported Providers</h3>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <span class="badge" style="background:var(--accent-soft);color:var(--accent);">FamPay (UPI)</span>
+              <span class="badge" style="background:var(--accent-soft);color:var(--accent);">Paytm (UPI)</span>
+              <span class="badge" style="background:var(--accent-soft);color:var(--accent);">BharatPe (UPI)</span>
+              <span class="badge" style="background:var(--accent-soft);color:var(--accent);">Binance USDT (BSC)</span>
+            </div>
+          </div>
+
+          <div class="alert-box" style="margin-top:16px;font-size:0.85rem;">
+            <strong>Security Note:</strong> Your API key is stored in browser localStorage. For production, use a backend server to create orders and verify webhooks securely.
+          </div>
         </div>
       </section>
 
