@@ -1,0 +1,33 @@
+# BoostHub — Social Media Growth Services (LLMs.txt)
+
+BoostHub is an original static HTML/CSS/JavaScript SMM panel storefront with Indian Rupee (₹ INR) pricing, UPI-style demo wallet, Firebase Realtime Database integration, and a Creator Premium admin panel.
+
+## Base URL
+https://boosthub-seven.vercel.app
+
+## Pages
+- / — Home: Instagram, Facebook, and YouTube service catalog
+- /instagram/ — Instagram services (followers, views, likes, saves)
+- /facebook/ — Facebook services (page followers, post likes, views, groups)
+- /youtube/ — YouTube services (views, subscribers, likes, watch hours)
+- /order/ — Place a demo order with wallet checkout
+- /orders/ — Order history and tracking
+- /addfunds/ — UPI-style demo wallet deposit
+- /menu/ — Account menu and demo data management
+- /chat/ — Support chat assistant
+- /share/ — Referral and sharing page
+- /install/ — PWA installation instructions
+- /terms/ — Terms of service
+- /privacy-policy/ — Privacy policy
+- /admin/ — Creator Premium admin panel (services, orders, users, Firebase DB)
+- /404/ — Custom 404 page
+
+## Firebase
+Project ID: hiiii-72d78
+Realtime Database used for admin panel data sync.
+
+## Currency
+₹ (Indian Rupee / INR)
+
+## Contact
+support@boosthub.example
