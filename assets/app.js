@@ -26,8 +26,79 @@
     DARK: "boosthub_dark",
     LAST_SPIN: "boosthub_last_spin",
     CHAT: "boosthub_chat",
-    ADMIN: "boosthub_admin"
+    ADMIN: "boosthub_admin",
+    PAYZAPI_KEY: "boosthub_payzapi_key",
+    PAYZAPI_WEBHOOK_SECRET: "boosthub_payzapi_webhook_secret"
   };
+
+  /*=============================================================================
+   * PAYZAPI PAYMENT GATEWAY INTEGRATION
+   * Docs: https://payzapi.in/docs
+   * Base URL: https://payzapi.in/api/v1
+   *===========================================================================*/
+  var PAYZAPI_BASE = "https://payzapi.in/api/v1";
+
+  function getPayzapiKey() {
+    return localStorage.getItem(KEYS.PAYZAPI_KEY) || "";
+  }
+
+  function setPayzapiKey(key) {
+    localStorage.setItem(KEYS.PAYZAPI_KEY, key);
+  }
+
+  function createPayzapiOrder(amount, options) {
+    var key = getPayzapiKey();
+    if (!key) {
+      return Promise.reject(new Error("PayZAPI API key not configured. Please set it in Admin Panel → Payment Settings."));
+    }
+
+    var uid = localStorage.getItem(KEYS.UID) || "BH-unknown";
+    var payload = {
+      amount: parseFloat(amount),
+      payment_provider: (options && options.payment_provider) || "fampay",
+      client_order_id: (options && options.client_order_id) || "INV-" + uid + "-" + Date.now(),
+      customer_name: (options && options.customer_name) || "BoostHub User",
+      customer_email: (options && options.customer_email) || "",
+      redirect_url: (options && options.redirect_url) || (location.origin + "/addfunds/?status=success"),
+      expiry_minutes: (options && options.expiry_minutes) || 15
+    };
+
+    return fetch(PAYZAPI_BASE + "/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": key
+      },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.text().then(function (txt) { throw new Error("PayZAPI error (" + res.status + "): " + txt); });
+      }
+      return res.json();
+    });
+  }
+
+  function checkPayzapiOrder(orderId) {
+    var key = getPayzapiKey();
+    if (!key) {
+      return Promise.reject(new Error("PayZAPI API key not configured."));
+    }
+    return fetch(PAYZAPI_BASE + "/check?order_id=" + encodeURIComponent(orderId), {
+      method: "GET",
+      headers: {
+        "x-api-key": key
+      }
+    }).then(function (res) {
+      if (!res.ok) {
+        return res.text().then(function (txt) { throw new Error("PayZAPI check error (" + res.status + "): " + txt); });
+      }
+      return res.json();
+    });
+  }
+
+  /*=============================================================================
+   * ADMIN CONTROL (Creator Premium)
+   *===========================================================================*/
 
   var REWARDS = [
     { label: "₹5", amount: 5, color: "#2563eb" },
@@ -472,6 +543,12 @@
     isAdmin: isAdmin,
     setAdmin: setAdmin,
     adminLogin: adminLogin,
-    adminLogout: adminLogout
+    adminLogout: adminLogout,
+    /* PayZAPI */
+    getPayzapiKey: getPayzapiKey,
+    setPayzapiKey: setPayzapiKey,
+    createPayzapiOrder: createPayzapiOrder,
+    checkPayzapiOrder: checkPayzapiOrder,
+    PAYZAPI_BASE: PAYZAPI_BASE
   };
 })();
