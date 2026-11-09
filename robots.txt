@@ -3,5 +3,6 @@ Allow: /
 Disallow: /orders/
 Disallow: /addfunds/
 Disallow: /chat/
+Disallow: /admin/
 
-Sitemap: /sitemap.xml
+Sitemap: https://boosthub-seven.vercel.app/sitemap.xml
