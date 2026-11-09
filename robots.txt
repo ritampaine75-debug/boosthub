@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /orders/
+Disallow: /addfunds/
+Disallow: /chat/
+
+Sitemap: /sitemap.xml
