@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    { "source": "/chat.php", "destination": "/chat/", "permanent": true },
+    { "source": "/order.php", "destination": "/order/", "permanent": true }
+  ]
+}
